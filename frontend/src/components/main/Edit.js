@@ -1,21 +1,53 @@
 import React from 'react';
 import ShowInfo from './ShowInfo';
 import EditTask from './EditTask';
+import Loading from './Loading';
 
 export default class Edit extends React.Component {
+    componentDidMount() {
+        this.props.setGetTaskAction(window.location.pathname.split('/')[window.location.pathname.split('/').length-1]);
+    }
     render() {
-        return (
-            this.props.editable ? 
-                <EditTask 
-                    updateTaskAction={this.props.updateTaskAction}
-                    setEditableAction={this.props.setEditableAction}
-                    task={this.props.task}
-                />
-            : 
-                <ShowInfo 
-                    setEditableAction={this.props.setEditableAction}
-                    task={this.props.task}
-                />
-        )
+        if (this.props.fetched && !this.props.fetching && !this.props.err && this.props.task && Object.prototype.toString.call(this.props.task) === '[object Object]') {
+            return (
+                this.props.editable ? 
+                    <EditTask 
+                        updateTaskAction={this.props.updateTaskAction}
+                        setEditableAction={this.props.setEditableAction}
+                        task={this.props.task}
+                        fetched={this.props.fetched}
+                        fetching={this.props.fetching}
+
+                        editable={this.props.editable}
+                    />
+                : 
+                    <ShowInfo 
+                        setEditableAction={this.props.setEditableAction}
+                        task={this.props.task}
+
+                        editable={this.props.editable}
+                    />
+            )
+        } else if (this.props.fetched && !this.props.fetching && this.props.err && !this.props.task) {
+            return (
+                <React.Fragment>
+                    <main className="container bg-light flex-fill">
+                        <p>{this.props.err}</p>
+                    </main>
+                </React.Fragment>
+            )
+        } else if (this.props.fetched && !this.props.fetching && !this.props.err && Object.prototype.toString.call(this.props.task) === '[object String]') {
+            return (
+                <React.Fragment>
+                    <main className="container bg-light flex-fill">
+                        <p>{this.props.task}</p>
+                    </main>
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <Loading />
+            )
+        }
     }
 }

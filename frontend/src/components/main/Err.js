@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default class Err extends React.Component {
     componentDidMount() {
-        this.props.setDisableEditAction();
+        this.props.editable && this.props.setDisableEditAction();
     }
     
     render() {

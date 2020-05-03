@@ -19,7 +19,14 @@ app.use((req, res, next) => {
 /* get task list */
 app.get('/api/tasks', (req, res) => {
 	setTimeout(() => {
-		res.send(getTasksFromDB())
+		res.send(JSON.stringify(getTasksFromDB()));
+	}, 2000);
+});
+
+/* get address list */
+app.get('/api/state', (req, res) => {
+	setTimeout(() => {
+		res.send(JSON.stringify(Array.isArray(getTasksFromDB())));
 	}, 2000);
 });
 
@@ -36,7 +43,7 @@ app.post('/api/task', (req, res) => {
 		data.push(task);
 		setTasksToDB(data);
 	
-		res.send(task);
+		res.send(JSON.stringify(task));
 	}, 2000)
 });
 
@@ -59,7 +66,7 @@ app.put('/api/changeStatus', (req, res) => {
 		});
 		setTasksToDB(newData);
 
-		res.send(newData);
+		res.send(JSON.stringify(newData));
 	}, 2000)
 });
 
@@ -83,7 +90,7 @@ app.post('/api/updateTask', (req, res) => {
 		});
 		setTasksToDB(newData);
 
-		res.send(newData);
+		res.send(JSON.stringify(newData));
 	}, 2000)
 });
 
@@ -93,7 +100,7 @@ app.get('/api/task/:id', (req, res) => {
 		const data = getTasksFromDB(),
 			task = data.find(task => task.id === req.params.id);
 
-		task ? res.send(JSON.stringify([task])) : res.send({});
+		task ? res.send(JSON.stringify(task)) : res.send(JSON.stringify(`No data on ID ${req.params.id}.`));
 	}, 2000)
 });
 

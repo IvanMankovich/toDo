@@ -7,7 +7,21 @@ class ReqHandler {
         store.dispatch(actions.requestStarted());
         new Tasks().getTasksList().then(
             list => {
-                store.dispatch(actions.requestSuccess(list, null));
+                store.dispatch(actions.requestSuccess(list, null, null));
+                store.dispatch(actions.requestFinished());
+            },
+            err => {
+                store.dispatch(actions.requestFailed(err));
+                store.dispatch(actions.requestFinished());
+            }
+        )
+    }
+
+    getServerState() {
+        store.dispatch(actions.requestStarted());
+        new Tasks().getServerState().then(
+            status => {
+                store.dispatch(actions.requestSuccess(null, null, status));
                 store.dispatch(actions.requestFinished());
             },
             err => {
@@ -22,7 +36,7 @@ class ReqHandler {
         new Tasks().addTask(data).then(
             () => new Tasks().getTasksList().then(
                 list => {
-                    store.dispatch(actions.requestSuccess(list));
+                    store.dispatch(actions.requestSuccess(list, null, null));
                     store.dispatch(actions.requestFinished());
                 },
                 err => {
@@ -42,7 +56,7 @@ class ReqHandler {
         new Tasks().removeTask(id).then(
             () => new Tasks().getTasksList().then(
                 list => {
-                    store.dispatch(actions.requestSuccess(list));
+                    store.dispatch(actions.requestSuccess(list, null, null));
                     store.dispatch(actions.requestFinished());
                 },
                 err => {
@@ -62,7 +76,7 @@ class ReqHandler {
         new Tasks().changeTaskStatus(data).then(
             () => new Tasks().getTasksList().then(
                 list => {
-                    store.dispatch(actions.requestSuccess(list));
+                    store.dispatch(actions.requestSuccess(list, null, null));
                     store.dispatch(actions.requestFinished());
                 },
                 err => {
@@ -79,17 +93,11 @@ class ReqHandler {
 
     getTask(id) {
         store.dispatch(actions.requestStarted());
-        new Tasks().getTasksList().then(
-            () => new Tasks().getTask(id).then(
-                data => {
-                    store.dispatch(actions.requestSuccess(null, data))
-                    store.dispatch(actions.requestFinished());
-                },
-                err => {
-                    store.dispatch(actions.requestFailed(err));
-                    store.dispatch(actions.requestFinished());
-                }
-            ),
+        new Tasks().getTask(id).then(
+            data => {
+                store.dispatch(actions.requestSuccess(null, data, null))
+                store.dispatch(actions.requestFinished());
+            },
             err => {
                 store.dispatch(actions.requestFailed(err));
                 store.dispatch(actions.requestFinished());
@@ -100,9 +108,9 @@ class ReqHandler {
     updateTask(data) {
         store.dispatch(actions.requestStarted());
         new Tasks().updateTask(data).then(
-            () => new Tasks().getTasksList().then(
-                list => {
-                    store.dispatch(actions.requestSuccess(list));
+            () => new Tasks().getTask(data.id).then(
+                task => {
+                    store.dispatch(actions.requestSuccess(null, task, null));
                     store.dispatch(actions.requestFinished());
                 },
                 err => {

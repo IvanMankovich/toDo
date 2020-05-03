@@ -1,9 +1,8 @@
 import React from 'react';
-import store from '../../store';
 
 export default class  ShwoInfo extends React.Component {
     onBtnCLick = () => {
-        this.props.setEditableAction(store.getState().editable);
+        this.props.setEditableAction(this.props.editable);
     }
     render() {
         return (

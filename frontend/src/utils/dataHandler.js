@@ -9,6 +9,16 @@ class Tasks {
 			})
 	}
 
+	getServerState() {
+		return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET', 'http://localhost:4000/api/state', true);
+			xhr.onload = () => resolve(JSON.parse(xhr.response));
+			xhr.onerror = (e) => reject('Server error')
+			xhr.send();
+		})
+}
+
     addTask(data) {
 		return new Promise(resolve => {
 			const xhr = new XMLHttpRequest();

@@ -1,5 +1,4 @@
 import React from 'react';
-import store from '../../store';
 
 export default class EditTask extends React.Component {
     onSwitchChange = (e) => {
@@ -7,11 +6,10 @@ export default class EditTask extends React.Component {
     }
     onBtnCLick = () => {
         this.props.updateTaskAction({id: this.props.task.id, text: this.taskName.value, description: this.taskDescr.value, status: this.taskStatus.checked ? 'Active' : 'Done'});
-        this.props.setEditableAction(store.getState().editable);
+        this.props.setEditableAction(this.props.editable);
     }
     render() {
         return (
-            store.getState().fetched && !store.getState().fetching ?
             <div className="pt-2 pb-2 pl-1 pr-1 bg-light" ref={(form) => {this.form = form}}>
                 <div className="form-group">
                     <label htmlFor="taskName">Task name:</label>
@@ -27,7 +25,6 @@ export default class EditTask extends React.Component {
                 </div>
                 <button className="btn btn-dark btn-block" onClick={this.onBtnCLick}>Save changes</button>
             </div>
-            : <div className="spinner-border"></div>
         );
     }
 }

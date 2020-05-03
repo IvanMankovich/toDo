@@ -1,3 +1,5 @@
+// import { actions } from "../actions";
+
 export const initialState = {
   fetching: false,
   fetched: false,
@@ -5,7 +7,7 @@ export const initialState = {
   list: null,
   editable: false,
   task: null,
-  match: [],
+  serverState: null,
 };
 
 export function rootReducer(state = initialState, action) {
@@ -20,7 +22,7 @@ export function rootReducer(state = initialState, action) {
       }
 
     case 'REQUEST_SUCCESS':
-      if (action.payload && action.task) {
+      if (action.payload && action.task && action.serverState) {
         return {
           ...state,
           fetching: false,
@@ -29,11 +31,10 @@ export function rootReducer(state = initialState, action) {
           list: action.payload,
           editable: false,
           task: action.task,
-          match: action.payload.map(task => {
-            return `edit/${task.id}`;
-          }),
+          serverState: action.serverState,
         }
-      } else if (action.payload && !action.task) {
+
+      } else if (action.payload && !action.task && action.serverState) {
         return {
           ...state,
           fetching: false,
@@ -42,11 +43,32 @@ export function rootReducer(state = initialState, action) {
           list: action.payload,
           editable: false,
           task: null,
-          match: action.payload.map(task => {
-            return `/edit/${task.id}`;
-          }),
+          serverState: action.serverState,
         }
-      } else if (!action.payload && action.task) {
+
+      } else if (action.payload && action.task && !action.serverState) {
+        return {
+          ...state,
+          fetching: false,
+          fetched: false,
+          err: null,
+          list: action.payload,
+          editable: false,
+          task: action.task,
+        }
+
+      } else if (action.payload && !action.task && !action.serverState) {
+        return {
+          ...state,
+          fetching: false,
+          fetched: false,
+          err: null,
+          list: action.payload,
+          editable: false,
+          task: null,
+        }
+/******************************************************************************/
+      } else if (!action.payload && action.task && !action.serverState) {
         return {
           ...state,
           fetching: false,
@@ -55,8 +77,34 @@ export function rootReducer(state = initialState, action) {
           editable: false,
           task: action.task,
         }
+
+      } else if (!action.payload && !action.task && action.serverState) {
+        return {
+          ...state,
+          fetching: false,
+          fetched: false,
+          err: null,
+          editable: false,
+          serverState: action.serverState,
+        }
+
+      } else if (!action.payload && action.task && action.serverState) {
+        return {
+          ...state,
+          fetching: false,
+          fetched: false,
+          err: null,
+          editable: false,
+          task: action.task,
+          serverState: action.serverState,
+        }
+
+      } else{
+        return {
+          ...state,
+          err: 'Unknown error.',
+        }
       }
-      break;
 
     case 'REQUEST_FAILED':
       return {
