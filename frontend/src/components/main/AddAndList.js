@@ -11,6 +11,7 @@ export default class AddAndList extends React.Component {
     
     render() {
         if (this.props.fetched && !this.props.fetching && this.props.list && !this.props.err) {
+            document.title = 'Tasks list || ToDo List';
             return (
                 <React.Fragment>
                     <InputContainer setAddTaskAction={this.props.setAddTaskAction} />
@@ -21,6 +22,7 @@ export default class AddAndList extends React.Component {
                 </React.Fragment>
             );
         } else if (this.props.fetched && !this.props.fetching && !this.props.list && this.props.err) {
+            document.title = 'Tasks list | Error | ToDo List';
             return (
                 <React.Fragment>
                     <main className="container bg-light flex-fill">
@@ -29,6 +31,7 @@ export default class AddAndList extends React.Component {
                 </React.Fragment>
             )
         } else {
+            document.title = 'Tasks list | Loading | ToDo List';
             return (
                 <Loading />
             )

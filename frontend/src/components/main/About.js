@@ -9,6 +9,7 @@ export default class About extends React.Component {
     
     render() {
         if (this.props.fetched && !this.props.fetching && !this.props.err) {
+            document.title = 'About || ToDo List';
             return (
                 <React.Fragment>
                     <h2>Motivation</h2>
@@ -49,6 +50,7 @@ export default class About extends React.Component {
                 </React.Fragment>
             );
         } else if (this.props.fetched && !this.props.fetching && this.props.err) {
+            document.title = 'About | Error | ToDo List';
             return (
                 <React.Fragment>
                     <main className="container bg-light flex-fill">
@@ -57,6 +59,7 @@ export default class About extends React.Component {
                 </React.Fragment>
             )
         } else {
+            document.title = 'About | Loading | ToDo List';
             return (
                 <Loading />
             )

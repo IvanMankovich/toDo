@@ -10,6 +10,7 @@ export default class WelcomePage extends React.Component {
     
     render() {
         if (this.props.fetched && !this.props.fetching && !this.props.err) {
+            document.title = 'Welcome || ToDo List';
             return (
                 <React.Fragment>
                     <h1 className="text-center">Welcome to ToDo List Application!</h1>
@@ -20,6 +21,7 @@ export default class WelcomePage extends React.Component {
                 </React.Fragment>
             );
         } else if (this.props.fetched && !this.props.fetching && this.props.err) {
+            document.title = 'Welcome | Error | ToDo List';
             return (
                 <React.Fragment>
                     <main className="container bg-light flex-fill">
@@ -28,6 +30,7 @@ export default class WelcomePage extends React.Component {
                 </React.Fragment>
             )
         } else {
+            document.title = 'Welcome | Loading | ToDo List';
             return (
                 <Loading />
             )

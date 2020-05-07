@@ -7,6 +7,7 @@ export default class Err extends React.Component {
     }
     
     render() {
+        document.title = 'Error || ToDo List';
         return (
             <React.Fragment>
                 <h2>Ooops... Something wents wrong. Please, check entered address.</h2>

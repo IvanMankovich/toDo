@@ -82,8 +82,8 @@ app.post('/api/updateTask', (req, res) => {
 			} else {
 			newData.push({
 				id: item.id,
-				text: req.body.text,
-				description: req.body.description,
+				text: req.body.text.trim() ? req.body.text : req.body.id,
+				description: req.body.description.trim() ? req.body.description : 'No description',
 				status: req.body.status,
 			})
 			}

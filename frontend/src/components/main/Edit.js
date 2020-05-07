@@ -9,6 +9,7 @@ export default class Edit extends React.Component {
     }
     render() {
         if (this.props.fetched && !this.props.fetching && !this.props.err && this.props.task && Object.prototype.toString.call(this.props.task) === '[object Object]') {
+            document.title = `Edit task | ${this.props.task.text} | ToDo List`;
             return (
                 this.props.editable ? 
                     <EditTask 
@@ -29,6 +30,7 @@ export default class Edit extends React.Component {
                     />
             )
         } else if (this.props.fetched && !this.props.fetching && this.props.err && !this.props.task) {
+            document.title = 'Edit task | Error | ToDo List';
             return (
                 <React.Fragment>
                     <main className="container bg-light flex-fill">
@@ -37,6 +39,7 @@ export default class Edit extends React.Component {
                 </React.Fragment>
             )
         } else if (this.props.fetched && !this.props.fetching && !this.props.err && Object.prototype.toString.call(this.props.task) === '[object String]') {
+            document.title = 'Edit task | Task not found | ToDo List';
             return (
                 <React.Fragment>
                     <main className="container bg-light flex-fill">
@@ -45,6 +48,7 @@ export default class Edit extends React.Component {
                 </React.Fragment>
             )
         } else {
+            document.title = 'Edit task | Loading | ToDo List';
             return (
                 <Loading />
             )
