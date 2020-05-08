@@ -63,14 +63,14 @@ app.put('/api/changeStatus', (req, res) => {
 			newData = [];
 		data.forEach(item => {
 			if (item.id !== req.body.id) {
-			newData.push(item);
+				newData.push(item);
 			} else {
-			newData.push({
-				id: item.id,
-				text: item.text,
-				description: item.description,
-				status: req.body.status === 'Active' ? 'Done' : 'Active',
-			})
+				newData.push({
+					id: item.id,
+					text: item.text,
+					description: item.description,
+					status: req.body.status === 'Active' ? 'Done' : 'Active',
+				})
 			}
 		});
 		setTasksToDB(newData);
@@ -87,14 +87,14 @@ app.post('/api/updateTask', (req, res) => {
 
 		data.forEach(item => {
 			if (item.id !== req.body.id) {
-			newData.push(item);
+				newData.push(item);
 			} else {
-			newData.push({
-				id: item.id,
-				text: req.body.text.trim() ? req.body.text : req.body.id,
-				description: req.body.description.trim() ? req.body.description : 'No description',
-				status: req.body.status,
-			})
+				newData.push({
+					id: item.id,
+					text: req.body.text.trim() ? req.body.text : req.body.id,
+					description: req.body.description.trim() ? req.body.description : 'No description',
+					status: req.body.status,
+				})
 			}
 		});
 		setTasksToDB(newData);
@@ -118,9 +118,7 @@ app.delete('/api/task/:id', (req, res) => {
 	setTimeout(() => {
 		const data = getTasksFromDB(),
 			newData = data.filter(task => task.id !== req.params.id);
-
-			setTasksToDB(newData);
-
+		setTasksToDB(newData);
 		res.sendStatus(204);
 	}, 2000)
 });

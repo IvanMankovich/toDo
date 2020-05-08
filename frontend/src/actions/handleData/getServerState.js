@@ -1,10 +1,16 @@
 import { actions } from '../';
-import Tasks from '../../utils/dataHandler';
 
 export default function getServerState() {
     return function (dispatch) {
         dispatch(actions.requestStarted());
-        return new Tasks().getServerState().then(
+        return fetch('http://localhost:4000/api/state', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(
+            response =>  response.json()
+        ).then(
             status => {
                 dispatch(actions.requestSuccess(null, null, status));
                 dispatch(actions.requestFinished());

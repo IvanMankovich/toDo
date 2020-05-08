@@ -1,10 +1,16 @@
 import { actions } from '../';
-import Tasks from '../../utils/dataHandler';
 
 export default function getTask (id) {
     return function (dispatch) {
         dispatch(actions.requestStarted());
-        return new Tasks().getTask(id).then(
+        return fetch(`http://localhost:4000/api/task/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(
+            response =>  response.json()
+        ).then(
             data => {
                 dispatch(actions.requestSuccess(null, data, null))
                 dispatch(actions.requestFinished());

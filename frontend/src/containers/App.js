@@ -102,7 +102,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
     return {
         setGetListAction: () => {
-            dispatch(handleData.getListAction())
+            dispatch(handleData.getTasksList())
         },
         setAddTaskAction: data => {
             dispatch(handleData.addTask(data))

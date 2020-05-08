@@ -1,11 +1,23 @@
 import { actions } from '../';
-import Tasks from '../../utils/dataHandler';
 
 export default function changeTaskStatus(data) {
     return function (dispatch) {
         dispatch(actions.requestStarted());
-        return new Tasks().changeTaskStatus(data).then(
-            () => new Tasks().getTasksList().then(
+        return fetch('http://localhost:4000/api/changeStatus', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        }).then(
+            () => fetch('http://localhost:4000/api/tasks', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(
+                response =>  response.json()
+            ).then(
                 list => {
                     dispatch(actions.requestSuccess(list, null, null));
                     dispatch(actions.requestFinished());
@@ -16,7 +28,7 @@ export default function changeTaskStatus(data) {
                 }
             ),
             err => {
-                dispatch(actions.requestFailed(err))
+                dispatch(actions.requestFailed(err));
                 dispatch(actions.requestFinished());
             }
         )

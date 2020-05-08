@@ -6,7 +6,7 @@ import requestFinished from './requestStatus/requestFinished';
 import disableEdit from './editable/disableEdit';
 import setEditable from './editable/setEditable';
 
-import getListAction from './handleData/getListAction';
+import getTasksList from './handleData/getTasksList';
 import getServerState from './handleData/getServerState';
 import addTask from './handleData/addTask';
 import removeTask from './handleData/removeTask';
@@ -24,7 +24,7 @@ const actions = {
 };
 
 const handleData = {
-    getListAction: getListAction,
+    getTasksList: getTasksList,
     getServerState: getServerState,
     addTask: addTask,
     removeTask: removeTask,
