@@ -1,9 +1,18 @@
-import requestStarted from './requestStarted';
-import requestSuccess from './requestSuccess';
-import requestFailed from './requestFailed';
-import setEditable from './setEditable';
-import requestFinished from './requestFinished';
-import disableEdit from './disableEdit';
+import requestStarted from './requestStatus/requestStarted';
+import requestSuccess from './requestStatus/requestSuccess';
+import requestFailed from './requestStatus/requestFailed';
+import requestFinished from './requestStatus/requestFinished';
+
+import disableEdit from './editable/disableEdit';
+import setEditable from './editable/setEditable';
+
+import getListAction from './handleData/getListAction';
+import getServerState from './handleData/getServerState';
+import addTask from './handleData/addTask';
+import removeTask from './handleData/removeTask';
+import changeTaskStatus from './handleData/changeTaskStatus';
+import getTask from './handleData/getTask';
+import updateTask from './handleData/updateTask';
 
 const actions = {
     requestStarted: requestStarted,
@@ -14,4 +23,14 @@ const actions = {
     disableEdit: disableEdit,
 };
 
-export { actions };
+const handleData = {
+    getListAction: getListAction,
+    getServerState: getServerState,
+    addTask: addTask,
+    removeTask: removeTask,
+    changeTaskStatus: changeTaskStatus,
+    getTask: getTask,
+    updateTask: updateTask,
+}
+
+export { actions, handleData };

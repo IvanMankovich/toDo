@@ -31,6 +31,7 @@ export default class About extends React.Component {
                                 <li>React</li>
                                 <li>Redux</li>
                                 <li>React-Router</li>
+                                <li>Thunk</li>
                                 <li>Bootstrap 4</li>
                                 <li>AJAX</li>
                             </ul>

@@ -10,8 +10,7 @@ import Edit from './../components/main/Edit';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { actions } from '../actions';
-import ReqHandler from '../utils/requestsHandler';
+import { actions, handleData } from '../actions';
 
 class App extends React.Component {
     render() {
@@ -103,22 +102,22 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
     return {
         setGetListAction: () => {
-            new ReqHandler().getOnlyList();
+            dispatch(handleData.getListAction())
         },
         setAddTaskAction: data => {
-            new ReqHandler().addTask(data);
+            dispatch(handleData.addTask(data))
         },
         setRemoveTaskAction: id => {
-            new ReqHandler().removeTask(id);
+            dispatch(handleData.removeTask(id))
         },
         changeTaskStatusAction: data => {
-            new ReqHandler().changeStatus(data);
+            dispatch(handleData.changeTaskStatus(data))
         },
         updateTaskAction: data => {
-            new ReqHandler().updateTask(data);
+            dispatch(handleData.updateTask(data))
         },
         setGetTaskAction: id => {
-            new ReqHandler().getTask(id);
+            dispatch(handleData.getTask(id));
         },
         setEditableAction: status => {
             dispatch(actions.setEditable(status))
@@ -127,7 +126,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(actions.disableEdit())
         },
         setGetServerState: () => {
-            new ReqHandler().getServerState();
+            dispatch(handleData.getServerState());
         }
     }
 };

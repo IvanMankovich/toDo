@@ -1,5 +1,3 @@
-// import { actions } from "../actions";
-
 export const initialState = {
   fetching: false,
   fetched: false,
