@@ -1,40 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import List from './List';
 import InputContainer from './InputContainer';
 import Loading from './Loading';
+import { actions, handleData } from '../../actions'
 
-export default class AddAndList extends React.Component {
-    componentDidMount() {
-        this.props.setGetListAction();
-        this.props.editable && this.props.setDisableEditAction();
-    }
+export default function AddAndList() {
+    const fetched = useSelector(state => state.fetched),
+          fetching = useSelector(state => state.fetching),
+          err = useSelector(state => state.err),
+          list = useSelector(state => state.list),
+          editable = useSelector(state => state.editable);
     
-    render() {
-        if (this.props.fetched && !this.props.fetching && this.props.list && !this.props.err) {
-            document.title = 'Tasks list || ToDo List';
-            return (
-                <React.Fragment>
-                    <InputContainer setAddTaskAction={this.props.setAddTaskAction} />
-                    <List 
-                        list={this.props.list} 
-                        setRemoveTaskAction={this.props.setRemoveTaskAction} 
-                        changeTaskStatusAction={this.props.changeTaskStatusAction} />
-                </React.Fragment>
-            );
-        } else if (this.props.fetched && !this.props.fetching && !this.props.list && this.props.err) {
-            document.title = 'Tasks list | Error | ToDo List';
-            return (
-                <React.Fragment>
-                    <main className="container bg-light flex-fill">
-                        <p>{this.props.err}</p>
-                    </main>
-                </React.Fragment>
-            )
-        } else {
-            document.title = 'Tasks list | Loading | ToDo List';
-            return (
-                <Loading />
-            )
-        }
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(handleData.getTasksList());
+        editable && dispatch(actions.disableEdit());
+    }, [])
+
+    if (fetched && !fetching && list && !err) {
+        document.title = 'Tasks list || ToDo List';
+        return (
+            <React.Fragment>
+                <InputContainer />
+                <List 
+                    list={list} 
+                    />
+            </React.Fragment>
+        );
+    } else if (fetched && !fetching && !list && err) {
+        document.title = 'Tasks list | Error | ToDo List';
+        return (
+            <React.Fragment>
+                <main className="container bg-light flex-fill">
+                    <p>{err}</p>
+                </main>
+            </React.Fragment>
+        )
+    } else {
+        document.title = 'Tasks list | Loading | ToDo List';
+        return (
+            <Loading />
+        )
     }
 }

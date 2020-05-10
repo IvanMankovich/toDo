@@ -65,7 +65,7 @@ export function rootReducer(state = initialState, action) {
           editable: false,
           task: null,
         }
-/******************************************************************************/
+
       } else if (!action.payload && action.task && !action.serverState) {
         return {
           ...state,
@@ -109,7 +109,7 @@ export function rootReducer(state = initialState, action) {
         ...state,
         fetching: false,
         fetched: false,
-        err: action.payload,
+        err: action.payload.message,
         list: null,
         editable: false,
         task: null,
